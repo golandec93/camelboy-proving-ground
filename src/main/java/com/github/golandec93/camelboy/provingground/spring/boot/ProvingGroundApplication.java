@@ -1,29 +1,27 @@
 package com.github.golandec93.camelboy.provingground.spring.boot;
 
-import org.springframework.boot.CommandLineRunner;
+import com.github.golandec93.camelboy.provingground.spring.boot.servlet.LoggingFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-
-import java.util.Arrays;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan("com.github.golandec93.camelboy.provingground.spring")
 public class ProvingGroundApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProvingGroundApplication.class, args);
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-        return args -> {
-            System.out.println("Let's inspect the beans provided by Spring Boot:");
-            String[] beanNames = ctx.getBeanDefinitionNames();
-            Arrays.sort(beanNames);
-            for (String beanName : beanNames) {
-                System.out.println(beanName);
-            }
-
-        };
+    public FilterRegistrationBean<LoggingFilter> registerLoggingFilter(@Autowired LoggingFilter loggingFilter) {
+        loggingFilter.setMaxPayloadLength(4000);
+        loggingFilter.setIncludeHeaders(true);
+        loggingFilter.setIncludePayload(true);
+        loggingFilter.setIncludeQueryString(true);
+        loggingFilter.setIncludeClientInfo(true);
+        return new FilterRegistrationBean<>(loggingFilter);
     }
 }

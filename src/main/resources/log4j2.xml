@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" strict="true">
+    <Appenders>
+        <appender type="Console" name="STDOUT">
+            <Layout type="PatternLayout" pattern="%d %t %c{.}.%M:%L %m\n"/>ç
+        </appender>
+    </Appenders>
+    <Loggers>
+        <Root level="WARN">
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+        <Logger name="com.github.golandec93.camelboy.provingground.spring"
+                additivity="false"
+                level="DEBUG">
+            <AppenderRef ref="STDOUT"/>
+        </Logger>
+    </Loggers>
+</Configuration>
